@@ -1,0 +1,99 @@
+.editor { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; grid-template-columns: minmax(0, 1fr); gap: 14px; }
+.badge { display: inline-block; padding: 2px 12px; border-radius: 999px; background: var(--brass); color: var(--text); font-weight: 800; font-size: 15px; margin-right: 10px; box-shadow: 0 2px 0 var(--brass-dark); }
+.save-state { font-size: 15px; font-weight: 700; }
+.head-tools { display: flex; gap: 10px; align-items: center; }
+.editor-score { min-height: 0; }
+.editor-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; padding: 8px 16px 12px; font-weight: 700; }
+.edit-layer { position: absolute; inset: 0; pointer-events: none; z-index: 10; }
+.sel-box { position: absolute; border: 4px solid var(--brass); border-radius: 12px; background: rgba(242, 176, 30, 0.18); box-shadow: 0 0 0 2px #fff; }
+.bar-issue { position: absolute; border: 3px dashed var(--warn); border-radius: 8px; background: rgba(194, 65, 12, 0.05); }
+.barcheck {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 12px 12px 0; padding: 10px 14px;
+  border: 2px solid var(--warn); background: var(--warn-soft); border-radius: var(--radius-sm); color: var(--warn);
+}
+.barcheck-text { flex: 1; min-width: 180px; color: var(--text); }
+.barcheck-fixes { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.palette { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 12px; padding: 12px 18px; align-items: start; }
+.pal-group { display: grid; gap: 6px; }
+.pal-h { font-size: 14px; color: var(--text-2); text-transform: uppercase; letter-spacing: .06em; }
+.pal-note-row { display: flex; align-items: center; gap: 10px; }
+.pal-updown { display: grid; gap: 8px; }
+.btn--big { min-height: 52px; justify-content: flex-start; white-space: nowrap; padding: 8px 14px; }
+.pal-name { font-family: var(--font-head); font-weight: 800; font-size: 52px; line-height: 1; min-width: 72px; text-align: center; white-space: nowrap; }
+.pal-valves { display: grid; justify-items: center; gap: 4px; text-align: center; }
+.pal-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.pal-len-row { flex-wrap: nowrap; }
+.pal-len { flex-direction: column; gap: 0; padding: 4px 6px; min-width: 56px; font-size: 13px; }
+.pal-sign { font-size: 30px; min-width: 52px; padding: 0 8px; font-family: 'Times New Roman', serif; }
+.dot-glyph { width: 10px; height: 10px; border-radius: 50%; background: currentColor; margin: 12px 0; }
+.pal-change { flex-direction: column; flex-wrap: nowrap; gap: 6px; }
+
+.pal-change .btn { white-space: nowrap; justify-content: flex-start; min-height: var(--tap); padding: 4px 14px; }
+.pal-delete { color: var(--warn); }
+.version-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; max-height: 50vh; overflow: auto; }
+.version-list li { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 12px; border-radius: 14px; background: var(--bg); }
+
+/* Tablets in landscape: Sign under Length and the Change buttons in 2 × 2, so the palette stays short and the
+   music gets the room. */
+@media (min-width: 1100px) {
+  .palette {
+    display: grid; grid-template-columns: auto auto auto; justify-content: space-between;
+    grid-template-areas: "note len change" "note sign change";
+  }
+  .palette > .pal-group:nth-child(1) { grid-area: note; }
+  .palette > .pal-group:nth-child(2) { grid-area: len; }
+  .palette > .pal-group:nth-child(3) { grid-area: sign; }
+  .palette > .pal-group:nth-child(4) { grid-area: change; }
+  .pal-change { display: grid; grid-template-columns: repeat(2, auto); align-content: start; }
+}
+@media (max-width: 1099px) {
+  .pal-change { flex-direction: row; flex-wrap: wrap; }
+}
+@media (max-width: 599px) {
+  .editor .screen-head { flex-wrap: wrap; }
+  .editor .screen-title { order: 3; flex-basis: 100%; }
+  .editor .head-tools { margin-left: auto; }
+  .editor { gap: 10px; }
+  .editor-foot { gap: 8px 10px; padding: 6px 10px 8px; }
+  .add-bar-word, .editor-foot .tap-hint { display: none; }
+  .tempo-value { min-width: 72px; }
+  .head-tools .head-versions { display: none; }
+  .head-tools { gap: 6px; }
+  .head-tools .btn--primary { padding: 8px 12px; }
+  /* simplified palette under the music */
+  .palette {
+    display: grid; grid-template-columns: 1fr; gap: 8px; padding: 10px 12px;
+    max-height: 46dvh; overflow-y: auto;
+  }
+  .pal-h { display: none; }
+  .pal-word { display: none; }
+  .btn--big { min-width: 56px; justify-content: center; }
+  .pal-updown { grid-auto-flow: column; }
+  .pal-name { font-size: 44px; min-width: 70px; }
+  .pal-valves .small { display: none; }
+  .pal-len { min-width: 52px; }
+  .pal-insert { display: none; }
+  .barcheck { margin: 8px 8px 0; }
+}
+.tempo-edit { display: flex; align-items: center; gap: 8px; }
+.tempo-label { font-weight: 800; color: var(--text-2); }
+.tempo-value { font-family: var(--font-head); font-weight: 800; font-size: 22px; min-width: 88px; text-align: center; }
+
+/* Short, wide screens (a phone held sideways): the palette sits beside the music, in its compact phone form. */
+@media (max-height: 500px) and (min-width: 600px) {
+  .editor { grid-template-columns: minmax(0, 1fr) minmax(300px, 40%); grid-template-rows: auto minmax(0, 1fr); gap: 10px; }
+  .editor > .screen-head { grid-column: 1 / -1; }
+  .editor > .palette {
+    grid-column: 2; grid-row: 2; display: grid; grid-template-columns: 1fr; gap: 8px; padding: 10px 12px;
+    overflow-y: auto; align-content: start;
+  }
+  .editor .pal-h, .editor .pal-word, .editor .pal-insert, .editor .pal-valves .small { display: none; }
+  .editor .btn--big { min-width: 56px; justify-content: center; }
+  .editor .pal-updown { grid-auto-flow: column; }
+  .editor .pal-name { font-size: 40px; min-width: 64px; }
+  .editor .pal-change { flex-direction: row; flex-wrap: wrap; }
+  .editor .pal-len { min-width: 48px; }
+  .editor-foot { gap: 8px 10px; padding: 6px 10px 8px; }
+  .add-bar-word, .editor-foot .tap-hint { display: none; }
+}

@@ -1,0 +1,12 @@
+node_modules/
+dist/
+dev-dist/
+.env
+.env.*
+!.env.example
+*.local
+.vercel/
+coverage/
+# copied from @coderline/alphatab by its Vite plugin
+public/font/
+public/soundfont/

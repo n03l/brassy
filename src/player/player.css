@@ -1,0 +1,122 @@
+.player {
+  display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr auto; gap: 16px;
+}
+.screen-head { display: flex; align-items: center; gap: 16px; }
+.screen-title { flex: 1; min-width: 0; }
+.song-title { font-size: 32px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.subtitle { font-weight: 700; }
+
+.player-body { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 16px; min-height: 0; }
+.score-card { position: relative; overflow: hidden; display: flex; flex-direction: column; min-height: 0; }
+.score-scroll { flex: 1; overflow-y: auto; overflow-x: hidden; min-height: 0; padding: 8px 4px; outline: none; }
+.score-wrap { position: relative; }
+.score-host { position: relative; }
+.score-msg { padding: 16px 24px 0; font-weight: 700; }
+
+/* alphaTab: the playing note in blue, the bar cursor in soft blue */
+.score-host .at-highlight * { fill: var(--blue); stroke: var(--blue); }
+.score-host .at-cursor-bar { background: rgba(43, 95, 217, 0.08); border-radius: 8px; }
+.score-host .at-cursor-beat { background: var(--blue); width: 3px; opacity: 0.6; }
+.score-host .at-selection div { background: rgba(242, 176, 30, 0.25); }
+
+.side { display: flex; flex-direction: column; gap: 16px; min-height: 0; overflow-y: auto; }
+.side-h { font-size: 18px; color: var(--text-2); text-transform: uppercase; letter-spacing: 0.06em; }
+.now { padding: 18px; display: grid; justify-items: center; gap: 8px; text-align: center; }
+.now .side-h { justify-self: start; }
+.now-name { font-family: var(--font-head); font-weight: 800; font-size: 96px; line-height: 1; color: var(--text); }
+.now-oct { font-size: 28px; color: var(--text-2); margin-left: 2px; }
+.now-caption { font-weight: 800; font-size: 20px; }
+.upnext { padding: 16px 18px; display: grid; gap: 10px; }
+.upnext-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.upnext-item { display: grid; justify-items: center; gap: 4px; padding: 8px 2px; border-radius: 14px; background: var(--bg); }
+.upnext-name { font-family: var(--font-head); font-weight: 800; font-size: 26px; line-height: 1; }
+
+.transport { display: flex; align-items: center; gap: 16px; padding: 12px 16px; flex-wrap: wrap; justify-content: center; }
+.play-btn { width: 88px; height: 88px; border-radius: 50%; padding: 0; }
+.speed { display: flex; align-items: center; gap: 8px; }
+.speed-value { display: grid; justify-items: center; min-width: 96px; font-family: var(--font-head); font-weight: 800; font-size: 36px; line-height: 1; }
+.speed-cap { font-family: var(--font-ui); font-size: 13px; color: var(--text-2); font-weight: 800; text-transform: uppercase; letter-spacing: .06em; }
+.toggles { display: flex; gap: 10px; }
+.speed-chip { display: none; }
+
+.empty { padding: 32px; display: grid; gap: 16px; justify-items: start; }
+
+@media (max-width: 899px) {
+  .player-body { grid-template-columns: minmax(0, 1fr) 260px; }
+  .now-name { font-size: 72px; }
+}
+@media (max-width: 599px) {
+  .player { gap: 10px; }
+  .song-title { font-size: 24px; }
+  .player-body { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto; gap: 10px; }
+  .side { overflow: visible; }
+  .now { grid-template-columns: auto 1fr; justify-items: start; align-items: center; text-align: left; }
+  .now .side-h { grid-column: 1 / -1; }
+  .now-name { font-size: 64px; grid-row: span 2; }
+  .transport {
+    position: relative; z-index: 10;
+    gap: 10px; flex-wrap: nowrap; justify-content: space-between;
+  }
+  .transport .t-label { display: none; }
+  .transport .toggles { display: none; }
+  .transport .speed { display: none; }
+  .speed-chip { display: inline-flex; font-family: var(--font-head); font-size: 22px; min-width: 88px; }
+  .transport--speed-open .speed {
+    display: flex; position: absolute; bottom: calc(100% + 8px); right: 0; background: var(--card);
+    border: 2px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 8px 12px;
+  }
+  .play-btn { width: 72px; height: 72px; }
+  .speed-value { font-size: 26px; min-width: 70px; }
+}
+
+/* ---------- loop practice ---------- */
+.loop-layer { position: absolute; inset: 0; pointer-events: none; z-index: 10; }
+.loop-shade { position: absolute; background: rgba(242, 176, 30, 0.18); border-top: 3px solid var(--brass); border-bottom: 3px solid var(--brass); }
+.loop-handle {
+  position: absolute; width: 48px; margin-left: -24px; pointer-events: auto; touch-action: none; cursor: ew-resize;
+  background: transparent; border: 0; padding: 0; display: grid; place-items: center;
+}
+.loop-grip {
+  width: 14px; height: 100%; min-height: 48px; border-radius: 8px; background: var(--brass);
+  border: 2px solid var(--brass-dark); box-shadow: 0 3px 0 var(--brass-dark);
+}
+.loop-panel { padding: 16px 18px; display: grid; gap: 14px; }
+.loop-bars { font-family: var(--font-head); font-weight: 800; font-size: 32px; line-height: 1; }
+.ladder { display: grid; gap: 6px; }
+.ladder-track { height: 14px; background: var(--bg); border-radius: 999px; overflow: hidden; border: 2px solid var(--line); }
+.ladder-fill { height: 100%; background: var(--brass); }
+.ladder-labels { display: flex; justify-content: space-between; font-weight: 800; }
+.ladder-labels span { display: grid; justify-items: center; }
+.ladder-labels small { font-size: 12px; color: var(--text-2); text-transform: uppercase; letter-spacing: .05em; }
+.ladder-now { color: var(--blue-dark); font-size: 22px; }
+.loop-count { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 20px; }
+.star-badge { width: 44px; height: 44px; border-radius: 50%; background: var(--brass); box-shadow: 0 3px 0 var(--brass-dark); display: grid; place-items: center; }
+.ladder-cfg summary { cursor: pointer; font-weight: 800; color: var(--text-2); min-height: var(--tap); display: flex; align-items: center; }
+.ladder-cfg-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; font-weight: 700; flex-wrap: wrap; }
+
+.now--compact { grid-template-columns: auto 1fr; justify-items: start; align-items: center; text-align: left; column-gap: 16px; padding: 12px 16px; }
+.now--compact .side-h { grid-column: 1 / -1; }
+.now--compact .now-name { font-size: 64px; grid-row: span 2; }
+.speed-value .speed-cap { white-space: nowrap; }
+.chip-tempo { display: block; font-family: var(--font-ui); font-size: 12px; color: var(--text-2); }
+.speed-chip { flex-direction: column; gap: 0; line-height: 1.1; }
+
+/* Short, wide screens (a phone held sideways): one transport row with icons only, no "Up next". */
+@media (max-height: 500px) and (min-width: 600px) {
+  .player, .player-body { gap: 10px; }
+  .song-title { font-size: 24px; }
+  .transport { flex-wrap: nowrap; gap: 8px; padding: 8px 12px; }
+  .transport .t-label { display: none; }
+  .play-btn { width: 64px; height: 64px; }
+  .speed-value { font-size: 26px; min-width: 70px; }
+  .upnext { display: none; }
+  .now { padding: 10px 14px; gap: 2px; }
+  .now-name { font-size: 48px; }
+}
+
+/* Tablets with the browser bars showing (≤ 760px tall): a smaller "Now playing" so "Up next" still fits. */
+@media (max-height: 760px) and (min-height: 501px) and (min-width: 600px) {
+  .side { gap: 12px; }
+  .now { padding: 12px 18px; gap: 4px; }
+  .now-name { font-size: 72px; }
+}
